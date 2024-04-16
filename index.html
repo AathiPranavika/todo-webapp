@@ -1,0 +1,259 @@
+<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+     body{
+        background-color: #002244;
+        justify-content: center;
+        align-items: center;
+     }
+     #wh{
+        height:500px;
+        background-color: white;
+        width:400px;
+        margin-top: 30px;
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+     }
+     #lyn{
+       width:600px;
+     }
+     #tit{
+        margin: 20px;
+        height:40px;
+        border-radius: 10px;
+        border:0.5px solid rgb(170, 175, 179);
+        inline-size: 350px;
+        overflow-wrap: break-word;
+     }
+     #des{
+        margin: 20px;
+        margin-top: 2px;
+        height:300px;
+        width:350px;
+        border-radius: 10px;
+        border:0.5px solid rgb(170, 175, 179);
+        overflow-wrap: break-word;
+     }
+     textarea{
+        padding:5px;
+        top:0;
+        left:0;
+        color:rgb(123, 124, 124);
+        letter-spacing: 1px;
+        font-size:20px;
+        vertical-align: text-top;
+     }
+     #but{
+        height:45px;
+        width:360px;
+        margin:20px;
+        margin-top: 10px;
+        border-radius: 10px;
+        border:none;
+        color:white;
+        font-size: 16px;
+        background-color: rgb(61, 177, 113);
+     }
+     .parent {
+        margin-right: 1rem;
+        text-align: center;
+     }
+     .child{
+        display:inline-block;
+        vertical-align: top;
+        margin:50px;
+        justify-content: center;
+        align-items: center;
+     }
+     pre{
+        margin-top: 0px;
+        word-spacing: 120px;
+        font-size:24px;
+     }
+     h1{
+       margin-top: 50px; 
+       color: white;
+       text-align: center;
+     }
+     #hello{
+       font-size: 24px;
+     }
+     #for{
+       position: absolute;
+       left:170px;
+     }
+     @media screen and (max-width:800px)
+     {
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    h1 {
+        margin-top: 20px;
+    }
+
+    #wh {
+        width: 300px;
+    }
+
+    .child {
+        margin: 20px;
+    }
+
+    #tit, #des, #but {
+        width: 250px;
+    }
+
+    pre {
+        word-spacing: 35px;
+        font-size: 18px;
+    }
+
+    #lyn {
+        width: 350px;
+    }
+
+    #def {
+        width: 80%;
+        margin: auto;
+    }
+}
+     
+</style>
+</head>
+<body>
+    <div id="ji">
+      <h1>TO DO WEBAPP</h1>
+    </div>
+    <div class="parent">
+    <div class="child">
+        <div id="wh">
+            <textarea id="tit" placeholder="Title" required></textarea>
+            <textarea id="des" placeholder="Description"></textarea>
+        <button type="submit" onclick="add()" id="but">SAVE</button>
+        </div>
+    </div>
+    <div class="child">
+        <pre id="def" style="color:white;margin-bottom: 0.6px; margin-top: 50px;">TITLE DESCRIPTION DELETE</pre>
+        <p id="lyn" style="color:white;margin-top: 0;border-bottom: 1px solid white;"></p>
+        <div id="res">
+
+        </div>
+    </div>
+    </div>
+    <script>
+      let t=document.getElementById("tit")
+      let q=document.getElementById("des")
+      let b=document.getElementById("but")
+      let r=document.getElementById("res")
+      let todos=[]
+      let desc=[]
+      window.onload=()=>{
+        todos= JSON.parse(localStorage.getItem("todos")) ||[]
+        console.log(todos)
+        todos.forEach(todo=>add(todo))
+      }
+     /* window.onload=()=>{
+        desc= JSON.parse(localStorage.getItem("todos")) ||[]
+        console.log(desc)
+        desc.forEach(todo=>add(todo))
+      }*/
+
+      function add(j)
+      {
+         let p=document.createElement("p")
+         p.id="hello"
+         a=t.value
+         if(t.value.trim()=="" && j==null)
+         {
+            return
+         }
+         if(j!=null)
+         {
+         p.innerHTML=j
+         }
+        else if(t.value!==null && j==null)
+        {
+         p.innerHTML=t.value
+         todos.push(t.value)
+         localStorage.setItem('todos',JSON.stringify(todos))
+        }
+         console.log(todos)
+         p.style.color="white"
+         p.style.textAlign="left"
+         p.style.border="1px solid white"
+         p.style.height="60px";
+         p.style.padding="10px";
+         p.style.borderRadius="10px";
+         p.style.color="rgb(123, 124, 124)";
+         p.style.backgroundColor="white";
+         p.style.position="relative";
+         p.style.margin="0px";
+         r.appendChild(document.createElement("br"))
+         r.appendChild(p)
+
+         let wa=document.createElement("p")
+         wa.id="for"
+         wa.innerHTML=q.value
+         let koj=q.value
+         wa.style.position="absolute";
+         wa.style.top="6px";
+         wa.style.margin="0";
+         p.appendChild(wa)
+         q.value=""
+         let d=document.createElement("button")
+         d.innerText="x"
+         d.style.textAlign="center";
+         d.style.height="30px";
+         d.style.width="30px";
+         d.style.fontSize="20px";
+         d.style.backgroundColor="red";
+         d.style.color="white";
+         d.style.border="none"
+         d.style.borderRadius="5px"
+         d.style.position="absolute"
+         d.style.right="10px";
+         p.appendChild(d)
+         r.appendChild(document.createElement("br"))
+         t.value=""
+         p.addEventListener('click',function()
+         {
+            strik(p,wa,j)
+         })
+         d.addEventListener('click',function()
+        {
+            del(p,j)
+         })
+      }
+      function del(p,j)
+         {
+           r.removeChild(p)
+           todos.pop(j)
+         }
+      function strik(p,wa,j)
+      {
+         p.style.textDecoration="line-through"
+         wa.style.textDecoration="line-through"
+
+      }  
+      function remove(j)
+     {
+      let index=todos.indexOf(j)
+      if(index>-1)
+      {
+         todos.splice(index,1)
+      }
+      console.log(todos)
+      localStorage.setItem('todos',JSON.stringify(todos))
+     }
+    </script>
+</body>
+</html>
